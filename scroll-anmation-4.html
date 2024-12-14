@@ -1,0 +1,206 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>scroll animation</title>
+
+        <!-- CSS Link -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/scroll-animation-2.css">
+    </head>
+
+    <body>
+        <div class="header py-5 ">
+            <div class="container">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cum sint ea sequi soluta tempora qui illo. At
+                    dolorum suscipit provident repudiandae iste, reprehenderit quae unde vel! Alias vitae obcaecati adipisci
+                    labore molestias itaque consequuntur at reiciendis debitis, ducimus sed sit porro, eligendi libero
+                    minima
+                    est quaerat cumque fugiat? Laboriosam voluptatibus architecto, saepe molestias repudiandae velit
+                    delectus,
+                    porro labore perspiciatis sunt eligendi distinctio pariatur cupiditate autem excepturi qui! Optio,
+                    commodi
+                    quisquam? Eligendi sit, alias distinctio sapiente dolor optio laboriosam? Quae quos nisi neque hic
+                    incidunt,
+                    nulla placeat, eius amet sit optio cupiditate impedit deserunt asperiores? Maxime doloremque delectus
+                    voluptatem ipsa laudantium.</p>
+            </div>
+        </div>
+
+        <div class="scroll-video overflow-hidden">
+            <div class="container">
+                <div class="d-flex gap-4">
+                    <div>
+                        <div class="video-scroll">
+                            <div>
+                                <video src="https://cdn.jsdelivr.net/gh/madebykin/codex/tokes_animate.mp4" autoplay=" "
+                                    loop="" muted="" playsinline=" " class="w-100 video-1"></video>
+                            </div>
+                            <div>
+                                <video src="https://cdn.jsdelivr.net/gh/madebykin/codex/networks_animate.mp4" autoplay=" "
+                                    loop="" muted="" playsinline=" " class="w-100 video-2"></video>
+                            </div>
+                            <div>
+                                <video src="https://cdn.jsdelivr.net/gh/madebykin/codex/NFTs_animate.mp4" autoplay=" "
+                                    loop="" muted="" playsinline=" " class="w-100 video-3"></video>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex flex-column justify-content-between h-100" style="max-height: 860px !important;">
+                            <div class="h-100 d-flex">
+                                <div class="video-description d-flex flex-column justify-content-between mh-100">
+                                    <div class="active scroll-text-4" id="scroll-text-4">
+                                        <p class="mb-0">Lorem ipsum dolor sit amet consectetur!</p>
+                                    </div>
+                                    <div class="scroll-text-4" id="scroll-text-4">
+                                        <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                                    </div>
+                                    <div class="scroll-text-4" id="scroll-text-4">
+                                        <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
+                                            nulla delectus deserunt eum sint reiciendis!</p>
+                                    </div>
+                                    <div class="scroll-text-4" id="scroll-text-4">
+                                        <p class="mb-0">Lorem ipsum dolor sit</p>
+                                    </div>
+                                    <div class="scroll-text-4" id="scroll-text-4">
+                                        <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
+                                            nulla.</p>
+                                    </div>
+                                </div>
+                                <div class="scroll-trig">
+                                    <div class="drag">
+                                        <div class="scroll-line"></div>
+                                        <!-- <div class="scroll-increase rounded-circle"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/gsap-js.js"></script>
+        <!-- <script src="assets/js/flip.js"></script> -->
+        <script src="assets/js/scroll-smother.js"></script>
+        <script src="assets/js/scroll-trigger.js"></script>
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                gsap.config({ trialWarn: false });
+                gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
+
+                // let smoother = ScrollSmoother.create({
+                //     element: document.documentElement,
+                //     smooth: 1,
+                //     effects: true,
+                // });
+
+                let scrolAnimation = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".scroll-video",
+                        start: "top 30",
+                        end: "bottom bottom",
+                        scrub: 1,
+                        pin: true,
+                        // markers: true,
+                    },
+                });
+
+
+                // let scrollvideo = gsap.timeline({
+                //     scrollTrigger: {
+                //         trigger: ".video-scroll",
+                //         start: "top 70",
+                //         end: "bottom bottom",
+                //         scrub: 1,
+                //         pin: true,
+                //     }
+                // })
+
+                scrolAnimation.fromTo(
+                    '.scroll-line',
+                    { height: '0%' },
+                    { height: '100%', duration: 1 },
+                )
+
+                window.addEventListener("scroll", function () {
+                    let scrollline = document.querySelector('.scroll-line');
+                    let description = document.querySelectorAll('#scroll-text-4');
+                    let video = document.querySelectorAll('.video-scroll video');
+                    let scroll = window.scrollY;
+                    // console.log(scroll);
+                    let height = document.documentElement.scrollHeight - window.innerHeight;
+                    let scrollHeight = (scroll / height) * 100;
+                    console.log(Math.round(scrollHeight));
+                    scrollline.style.height = `${scrollHeight}%`;
+
+                    if(scrollHeight < 7 && scrollHeight > 0){
+                        description[0].classList.add('active');
+                        description[1].classList.remove('active');
+                        description[2].classList.remove('active');
+                        description[3].classList.remove('active');
+                        description[4].classList.remove('active');
+                        video[0].classList.remove('d-none');
+                        video[1].classList.add('d-none');
+                        video[2].classList.add('d-none');
+                    }
+
+                    else if (scrollHeight > 7 && scrollHeight < 14) {
+                        description[0].classList.remove('active');
+                        description[1].classList.add('active');
+                        description[2].classList.remove('active');
+                        description[3].classList.remove('active');
+                        description[4].classList.remove('active');
+                        video[0].classList.add('d-none');  
+                        video[1].classList.remove('d-none');
+                        video[2].classList.add('d-none');
+                    }
+                    else if (scrollHeight > 14 && scrollHeight < 24) {
+                        description[0].classList.remove('active');
+                        description[1].classList.remove('active');
+                        description[2].classList.add('active');
+                        description[3].classList.remove('active');
+                        description[4].classList.remove('active');
+                        video[0].classList.add('d-none');
+                        video[1].classList.add('d-none');
+                        video[2].classList.remove('d-none');
+                    }
+                    else if (scrollHeight > 21 && scrollHeight < 37) {
+                        description[0].classList.remove('active');
+                        description[1].classList.remove('active');
+                        description[2].classList.remove('active');
+                        description[3].classList.add('active');
+                        description[4].classList.remove('active');
+                        video[0].classList.remove('d-none');
+                        video[1].classList.add('d-none');
+                        video[2].classList.add('d-none');
+                    }
+                    else if (scrollHeight > 37 && scrollHeight < 54) {
+                        description[0].classList.remove('active');
+                        description[1].classList.remove('active');
+                        description[2].classList.remove('active');
+                        description[3].classList.remove('active');
+                        description[4].classList.add('active');
+                        video[0].classList.add('d-none');
+                        video[1].classList.remove('d-none');
+                        video[2].classList.add('d-none');
+                    }
+                })
+            })
+        </script>
+    </body>
+
+    </html>
